@@ -9,12 +9,13 @@ Manim (Community Edition, "ManimCE") is a Python library for precise, programmat
 
 The core loop, every time:
 
-1. **Read the idea, don't interrogate it.** Most requests are underspecified on purpose — that's normal, not a blocker. Only ask a clarifying question if the idea is genuinely ambiguous in a way that changes the whole approach (e.g., "animate my algorithm" with no algorithm named). Otherwise, pick sensible defaults (see below) and just build something good.
-2. **Map concepts to manim vocabulary.** Use `references/vocabulary.md` to translate phrases like "morphs into", "zooms in", "counts up", "draws itself" into the actual class names (`Transform`, `MovingCameraScene`, `ValueTracker`, `Create`, etc.).
-3. **Sketch the shape of the scene before writing code**: what mobjects exist, what order they appear/change/leave in, roughly how long each beat takes. A short mental (or literal, in a comment) storyboard prevents a scene that's just a pile of disconnected `self.play()` calls.
-4. **Write one `Scene` subclass** (or `ThreeDScene`/`MovingCameraScene` if the idea needs 3D or camera movement — see `references/scene_types.md`) with a `construct()` method containing the animation.
-5. **Render a low-quality preview** to sanity-check it (`manim -pql <file>.py <SceneName>`) if you have shell access. If you don't have execution access in this environment, just hand over the code and tell the user the render command to run themselves — don't pretend to have previewed it.
-6. **Iterate based on what the user says about the result**, not by guessing what "looks better" in the abstract.
+1. **Set up the project.** If there's no `pyproject.toml` in the working directory yet, this is a new project: run `uv init` then `uv add manim` to scaffold it and pin manim as a dependency, before writing any scene code. If a `pyproject.toml` already exists, just check `manim` is a dependency (`uv add manim` again if not) rather than re-initializing.
+2. **Read the idea, don't interrogate it.** Most requests are underspecified on purpose — that's normal, not a blocker. Only ask a clarifying question if the idea is genuinely ambiguous in a way that changes the whole approach (e.g., "animate my algorithm" with no algorithm named). Otherwise, pick sensible defaults (see below) and just build something good.
+3. **Map concepts to manim vocabulary.** Use `references/vocabulary.md` to translate phrases like "morphs into", "zooms in", "counts up", "draws itself" into the actual class names (`Transform`, `MovingCameraScene`, `ValueTracker`, `Create`, etc.).
+4. **Sketch the shape of the scene before writing code**: what mobjects exist, what order they appear/change/leave in, roughly how long each beat takes. A short mental (or literal, in a comment) storyboard prevents a scene that's just a pile of disconnected `self.play()` calls.
+5. **Write one `Scene` subclass** (or `ThreeDScene`/`MovingCameraScene` if the idea needs 3D or camera movement — see `references/scene_types.md`) with a `construct()` method containing the animation.
+6. **Render a low-quality preview** to sanity-check it (`uv run manim -pql <file>.py <SceneName>`) if you have shell access. If you don't have execution access in this environment, just hand over the code and tell the user the render command to run themselves — don't pretend to have previewed it.
+7. **Iterate based on what the user says about the result**, not by guessing what "looks better" in the abstract.
 
 ## Defaults when the idea doesn't specify something
 
@@ -66,4 +67,4 @@ class CircleToSquare(Scene):
         self.wait()
 ```
 
-Render/preview with: `manim -pql circle_to_square.py CircleToSquare` (see the manim-export skill for quality/format/aspect-ratio options once the user wants a final version).
+Render/preview with: `uv run manim -pql circle_to_square.py CircleToSquare` (see the manim-export skill for quality/format/aspect-ratio options once the user wants a final version).

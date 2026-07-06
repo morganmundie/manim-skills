@@ -5,10 +5,10 @@ description: Render an existing Manim (ManimCE) Scene to a final video/image fil
 
 # Manim: Export / Render
 
-Manim always renders through the `manim` command-line tool acting on a Python file containing one or more `Scene` subclasses:
+Manim always renders through the `manim` command-line tool acting on a Python file containing one or more `Scene` subclasses. This project's `manim` is a `uv`-managed dependency (see the manim-create skill), so invoke it via `uv run` rather than calling `manim` directly:
 
 ```
-manim [flags] <script>.py <SceneName>
+uv run manim [flags] <script>.py <SceneName>
 ```
 
 If the script contains only one `Scene` subclass you can omit `<SceneName>`. If you want every `Scene` in the file rendered, use `-a` instead of naming one.
@@ -38,7 +38,7 @@ The quality flags above assume **landscape** (widescreen, width > height) — th
 | **Long / landscape (default)** | 854x480 | 1920x1080 | 3840x2160 |
 | **Short / vertical/portrait** | `-r 480,854` | `-r 1080,1920` | `-r 2160,3840` |
 
-Example — hi-def vertical short: `manim -qh -r 1080,1920 scene.py MyScene`
+Example — hi-def vertical short: `uv run manim -qh -r 1080,1920 scene.py MyScene`
 
 Manim recalculates the in-scene coordinate frame width from the new aspect ratio automatically (the frame stays 8 manim-units tall by convention), so existing scene code doesn't need to change — but a scene built and eyeballed for landscape may end up with wide elements running off the narrower edges in portrait. If the user wants a vertical export of a scene that was designed for landscape, mention that some repositioning (or scaling down of wide mobjects, larger font sizes since there's less horizontal room) may be worth revisiting, rather than silently assuming the crop will look right.
 
@@ -53,7 +53,7 @@ For square (Instagram feed-style): `-r 1080,1080` (or matching square at whateve
 - Regular: no extra flag needed. Background is whatever `self.camera.background_color` is set to in the scene (black by default).
 - Transparent: add `-t` (`--transparent`). Because standard mp4 doesn't support an alpha channel, manim will output to an alpha-capable container instead — default is `.mov`; if the user needs `.webm` specifically, add `--format webm` alongside `-t`.
 
-Example — transparent hi-def: `manim -qh -t scene.py MyScene`
+Example — transparent hi-def: `uv run manim -qh -t scene.py MyScene`
 
 If the user wants a solid custom color instead of manim's default black (and isn't asking for transparency), that's set via `-c "#RRGGBB"` (or `--background_color`) at render time, or `self.camera.background_color` in the scene itself.
 
@@ -73,10 +73,10 @@ If the user wants a solid custom color instead of manim's default black (and isn
 
 Resolve each of the three axes (quality, orientation, background) from the request, then combine flags in one call. A few worked examples:
 
-- "give me a low-res preview" → `manim -pql scene.py MyScene`
-- "export this in high def for YouTube" → `manim -qh scene.py MyScene`
-- "I need a 4k vertical version for Reels" → `manim -qk -r 2160,3840 scene.py MyScene`
-- "hi-def with a transparent background so I can put it over other footage" → `manim -qh -t scene.py MyScene`
-- "quick vertical draft, transparent" → `manim -ql -r 480,854 -t scene.py MyScene`
+- "give me a low-res preview" → `uv run manim -pql scene.py MyScene`
+- "export this in high def for YouTube" → `uv run manim -qh scene.py MyScene`
+- "I need a 4k vertical version for Reels" → `uv run manim -qk -r 2160,3840 scene.py MyScene`
+- "hi-def with a transparent background so I can put it over other footage" → `uv run manim -qh -t scene.py MyScene`
+- "quick vertical draft, transparent" → `uv run manim -ql -r 480,854 -t scene.py MyScene`
 
 Output lands under `media/videos/<script_name>/<resolution>p<fps>/<SceneName>.mp4` (or `.mov`/`.gif`/etc. matching the format) relative to wherever `manim` was invoked, unless `-o` was used — check there (or use `-f` to pop the folder open) rather than assuming a path.
