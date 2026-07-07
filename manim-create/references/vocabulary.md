@@ -63,6 +63,11 @@ for target in [Square(), Triangle()]:
 | "make a wave pass through it" | `ApplyWave(mobj)` |
 | "shake the camera's focus onto it" | `FocusOn(point)` |
 | a moving object should leave a fading streak | `ShowPassingFlash(mobj.copy().set_color(...))` |
+| a pulse/signal travels along a wire, curve, or edge | `ShowPassingFlash(path.copy().set_stroke(YELLOW, 6), time_width=0.3)` |
+| "it glows" (a charge, a hot spot, an energy source) | layered translucent copies — see the glow helpers in `references/creative_direction.md` |
+| a moving thing leaves a permanent trail | `TracedPath(mobj.get_center, stroke_color=...)` added to the scene before the motion |
+| "everything else fades back" to focus on one part | `others.animate.set_opacity(0.25)` alongside styling the focus (dim-the-rest, see `references/creative_direction.md`) |
+| "pull it out to look closer, then put it back" | `part.animate.scale(1.5).shift(...)` with `rate_func=there_and_back_with_pause`, long `run_time` |
 
 ## "Counts up / a number changes / a value drives motion"
 
