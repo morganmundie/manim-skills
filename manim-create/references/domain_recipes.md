@@ -87,6 +87,8 @@ def battery(height=0.8):
 
 A capacitor is two parallel equal plates; a bulb is `Circle` + a small cross; wires are `Line`s or a single closed `VMobject` loop.
 
+For anything beyond a quick sketch — proper schematic symbols (the manim-circuit plugin), terminal-based wiring, loop-first layout, meters — use the dedicated **manim-circuits skill**.
+
 ### Current flow
 
 Two options, by mood:
@@ -133,6 +135,8 @@ self.play(Indicate(gate), FadeIn(out_bit, shift=0.3 * RIGHT))
 ```
 
 Then the zoom-out move: shrink the single gate to a corner while a full circuit (many gates wired together) `Write`s in — "this simple thing composes into that".
+
+For real digital-logic scenes — all 8 IEEE gate shapes with wiring ports, evaluation choreography, truth-table sync, adders/latches/clocks — use the dedicated **manim-circuits skill** instead of building from this sketch.
 
 ### Memory, registers, data movement
 
